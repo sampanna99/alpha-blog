@@ -18,6 +18,12 @@ end
   def show
     @article = Article.find(params[:id])
   end
+  def destroy
+     @article = Article.find(params[:id])
+    @article.destroy
+    flash[:notice] = "article was successfully deleated"
+    redirect_to articles_path
+  end
 
   def edit
     @article = Article.find(params[:id])
