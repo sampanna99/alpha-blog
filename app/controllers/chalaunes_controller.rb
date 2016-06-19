@@ -11,6 +11,18 @@ class ChalaunesController < ApplicationController
       render 'new'
     end
   end
+  def edit
+    @chalaune = Chalaune.find(params[:id])
+  end
+  def update
+    @chalaune = Chalaune.find(params[:id])
+    if @chalaune.update(chalaune_params)
+      flash[:success] = "your account is updated"
+      redirect_to articles_path
+      else
+      render 'edit'
+    end
+  end
   private
   def chalaune_params
     params.require(:chalaune).permit(:username, :email, :password)
