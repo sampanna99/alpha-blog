@@ -23,6 +23,9 @@ class ChalaunesController < ApplicationController
       render 'edit'
     end
   end
+  def show
+    @chalaune = Chalaune.find(params[:id])
+  end
   private
   def chalaune_params
     params.require(:chalaune).permit(:username, :email, :password)
