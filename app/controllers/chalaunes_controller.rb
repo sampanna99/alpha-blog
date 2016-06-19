@@ -23,6 +23,9 @@ class ChalaunesController < ApplicationController
       render 'edit'
     end
   end
+  def index
+    @chalaunes = Chalaune.all
+  end
   def show
     @chalaune = Chalaune.find(params[:id])
   end
