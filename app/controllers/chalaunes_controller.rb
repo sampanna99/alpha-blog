@@ -7,8 +7,9 @@ class ChalaunesController < ApplicationController
   def create
     @chalaune = Chalaune.new(chalaune_params)
     if @chalaune.save
+      session[:chalaune_id] = @chalaune.id
       flash[:success] = "welcome to the alpha blog #{@chalaune.username}"
-      redirect_to articles_path
+      redirect_to chalaune_path(@chalaune)
       else
       render 'new'
     end
