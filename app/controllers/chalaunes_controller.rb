@@ -1,6 +1,7 @@
 class ChalaunesController < ApplicationController
   before_action :set_chalaune, only: [:edit, :update, :show]
-  before_action :require_same_chalaune, only: [:edit, :update]
+  before_action :require_same_chalaune, only: [:edit, :update, :destroy]
+  before_action :require_admin, only: [:destroy]
   def new
     @chalaune = Chalaune.new
   end
@@ -28,6 +29,13 @@ class ChalaunesController < ApplicationController
     @chalaunes = Chalaune.paginate(page: params[:page], per_page: 5)
   end
   def show
+    @chalaune_articles = @chalaune.articles.paginate(page: params[:page], per_page: 5)
+  end
+  def destroy
+    @chalaune = Chalaune.find(params[:id])
+    @chalaune.destroy
+    flash[:danger] = "Chalaune and all articles created by chalaune have been deleted"
+    redirect_to chalaunes_path
   end
   private
   def chalaune_params
@@ -37,8 +45,14 @@ class ChalaunesController < ApplicationController
     @chalaune = Chalaune.find(params[:id])
   end
   def require_same_chalaune
-    if current_chalaune != @chalaune
+    if current_chalaune != @chalaune and !current_chalaune.admin?
       flash[:danger] = "you can only do things to your own account"
+      redirect_to root_path
+    end
+  end
+  def require_admin
+    if logged_in? and !current_chalaune.admin?
+      flash[:danger] = "only admin chalaune can perform the action you requested"
       redirect_to root_path
     end
   end

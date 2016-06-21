@@ -18,7 +18,7 @@
   <hr>
 <%= simple_format(@article.description) %>
   <div class="article-actions">
-    <% if logged_in? && current_chalaune == @article.chalaune %>
+    <% if logged_in? && (current_chalaune == @article.chalaune || current_chalaune.admin?) %>
 <%= link_to 'edit this article', edit_article_path(@article), class: "btn btn-primary btn-xs" %>
 <%= link_to 'delete this article', article_path(@article), method: :delete, data: {confirm: "are you sure"}, class: "btn btn-xs btn-danger" %>
     <% end %>

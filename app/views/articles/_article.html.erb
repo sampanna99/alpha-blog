@@ -13,7 +13,7 @@
           last updated:<%= time_ago_in_words(art.updated_at) %> ago </small>
         </div>
         </div>
-     <% if logged_in? && current_chalaune == art.chalaune %>
+     <% if logged_in? && (current_chalaune == art.chalaune || current_chalaune.admin?) %>
     <div class="article-actions">
 <%= link_to 'edit this article', edit_article_path(art), class: "btn btn-primary btn-xs" %>
 <%= link_to 'delete this article', article_path(art), method: :delete, data: {confirm: "are you sure"}, class: "btn btn-xs btn-danger" %>

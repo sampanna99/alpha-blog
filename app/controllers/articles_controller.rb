@@ -49,7 +49,7 @@ end
     @article = Article.find(params[:id])
   end
   def require_same_chalaune
-    if current_chalaune != @article.chalaune
+    if current_chalaune != @article.chalaune and !current_chalaune.admin?
       flash[:danger] = "you can only edit or delete your own articles"
       redirect_to root_path
     end

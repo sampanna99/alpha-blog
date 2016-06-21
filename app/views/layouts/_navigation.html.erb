@@ -41,7 +41,7 @@
         <% if logged_in? %>
         <li><%= link_to 'Log out', logout_path, method: :delete %></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">your profile <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">your profile <%= "admin" if current_chalaune.admin? %> <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><%= link_to "edit your profile", edit_chalaune_path(current_chalaune) %></li>
             <li><%= link_to "view your profile", chalaune_path(current_chalaune) %></li>

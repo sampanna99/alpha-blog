@@ -10,6 +10,9 @@
         <%= link_to chalaune.username, chalaune_path(chalaune) %>
         </li>
       <li><small><%= pluralize(chalaune.articles.count, "article") if chalaune.articles %> </small></li>
+      <% if logged_in? and current_chalaune.admin? %>
+      <li><%= link_to "delete this chalaune", chalaune_path(chalaune), method: :delete, data: {confirm: "are you sure"}%> </li>
+      <% end %>
       </div>
     </div>
   </ul>
