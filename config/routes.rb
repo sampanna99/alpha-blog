@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 
   get 'signup', to: 'chalaunes#new'
   resources :chalaunes, except: [:new]
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

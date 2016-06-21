@@ -1,7 +1,9 @@
 class ArticlesController < ApplicationController
   before_action :set_params, only: [:edit, :update, :show, :destroy]
+  before_action :require_chalaune, except: [:index, :show]
+  before_action :require_same_chalaune, only: [:edit, :update, :destroy]
   def index
-    @articles = Article.all
+    @articles = Article.paginate(page: params[:page], per_page: 5)
   end
 def new
   @article = Article.new
@@ -9,7 +11,7 @@ end
   def create
    # render plain: params[:article].inspect
     @article = Article.new(article_params)
-   @article.chalaune = Chalaune.first
+   @article.chalaune = current_chalaune
     if @article.save
       flash[:success] = "Article was successfully created"
     redirect_to article_path(@article)
@@ -45,6 +47,12 @@ end
   end
   def set_params
     @article = Article.find(params[:id])
+  end
+  def require_same_chalaune
+    if current_chalaune != @article.chalaune
+      flash[:danger] = "you can only edit or delete your own articles"
+      redirect_to root_path
+    end
   end
 
 end
