@@ -1,6 +1,10 @@
 require 'test_helper'
+def setup
+  @chalaune = Chalaune.create(username: "baba", email: "baba@gmail.com", password: "password", admin: true)
+end
 class CreateCategoriesTest < ActionDispatch::IntegrationTest
   test "get new category form and create categories" do
+    sign_in_as(@chalaune, "password")
     get new_category_path
     assert_template 'categories/new'
     assert_difference 'Category.count', 1 do
@@ -10,6 +14,7 @@ class CreateCategoriesTest < ActionDispatch::IntegrationTest
     assert_match "sports", response.body
   end
   test "invalid category submission results in failure" do
+    sign_in_as(@chalaune, "password")
     get new_category_path
     assert_template 'categories/new'
     assert_no_difference 'Category.count' do
