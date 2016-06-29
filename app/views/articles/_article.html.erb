@@ -13,6 +13,9 @@
           last updated:<%= time_ago_in_words(art.updated_at) %> ago </small>
         </div>
         </div>
+      <% if art.categories.any? %>
+      <p> Categories: <%= render art.categories %></p>
+      <% end %>
      <% if logged_in? && (current_chalaune == art.chalaune || current_chalaune.admin?) %>
     <div class="article-actions">
 <%= link_to 'edit this article', edit_article_path(art), class: "btn btn-primary btn-xs" %>
